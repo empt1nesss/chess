@@ -213,7 +213,7 @@ void ChessModel::Move(const std::string &from, const std::string &to, sf::Render
   try {
     if (checkMove(x_from, y_from, x_to, y_to)) {
       m_board[y_to * 8 + x_to] = m_board[y_from * 8 + x_from];
-      m_board[y_from * 8 + x_from] = { false, NONE, 0, false };
+      m_board[y_from * 8 + x_from] = { false, NONE, 0 };
 
       m_blacks_move = !m_blacks_move;
       ++m_board[y_to * 8 + x_to].moves_count;
@@ -223,7 +223,7 @@ void ChessModel::Move(const std::string &from, const std::string &to, sf::Render
   }
   catch (const std::string &exception) {
     m_board[y_to * 8 + x_to] = m_board[y_from * 8 + x_from];
-    m_board[y_from * 8 + x_from] = { false, NONE, 0, false };
+    m_board[y_from * 8 + x_from] = { false, NONE, 0 };
 
     ++m_board[y_to * 8 + x_to].moves_count;
 
@@ -231,22 +231,22 @@ void ChessModel::Move(const std::string &from, const std::string &to, sf::Render
 
 
     if (exception[0] == 'k')
-      m_board[(exception[2] - '1') * 8 + exception[1] - 'A'] = { false, NONE, 0, false };
+      m_board[(exception[2] - '1') * 8 + exception[1] - 'A'] = { false, NONE, 0 };
 
     if (exception[0] == 'c') {
       if (exception[1] == 'l') {
-        m_board[7 * m_blacks_move * 8 + 2] = { m_blacks_move, KING, 1, false };
-        m_board[7 * m_blacks_move * 8 + 3] = { m_blacks_move, ROOK, 1, false };
+        m_board[7 * m_blacks_move * 8 + 2] = { m_blacks_move, KING, 1 };
+        m_board[7 * m_blacks_move * 8 + 3] = { m_blacks_move, ROOK, 1 };
 
-        m_board[7 * m_blacks_move * 8] = { false, NONE, 0, false };
-        m_board[7 * m_blacks_move * 8 + 4] = { false, NONE, 0, false };
+        m_board[7 * m_blacks_move * 8] = { false, NONE, 0 };
+        m_board[7 * m_blacks_move * 8 + 4] = { false, NONE, 0 };
       }
       else {
-        m_board[7 * m_blacks_move * 8 + 6] = { m_blacks_move, KING, 1, false };
-        m_board[7 * m_blacks_move * 8 + 5] = { m_blacks_move, ROOK, 1, false };
+        m_board[7 * m_blacks_move * 8 + 6] = { m_blacks_move, KING, 1 };
+        m_board[7 * m_blacks_move * 8 + 5] = { m_blacks_move, ROOK, 1 };
 
-        m_board[7 * m_blacks_move * 8 + 4] = { false, NONE, 0, false };
-        m_board[7 * m_blacks_move * 8 + 7] = { false, NONE, 0, false };
+        m_board[7 * m_blacks_move * 8 + 4] = { false, NONE, 0 };
+        m_board[7 * m_blacks_move * 8 + 7] = { false, NONE, 0 };
       }
     }
 
@@ -634,7 +634,7 @@ CHECK_SHAH:
 
   m_board[y_to * 8 + x_to] = m_board[y_from * 8 + x_from];
   ++m_board[y_to * 8 + x_to].moves_count;
-  m_board[y_from * 8 + x_from] = { false, NONE, 0, false };
+  m_board[y_from * 8 + x_from] = { false, NONE, 0 };
 
   m_blacks_move = !m_blacks_move;
   m_last_move = "A1A1";
@@ -645,22 +645,22 @@ CHECK_SHAH:
 
   if (!exception.empty()) {
     if (exception[0] == 'k')
-      m_board[(exception[2] - '1') * 8 + exception[1] - 'A'] = { false, NONE, 0, false };
+      m_board[(exception[2] - '1') * 8 + exception[1] - 'A'] = { false, NONE, 0 };
 
     if (exception[0] == 'c') {
       if (exception[1] == 'l') {
-        m_board[7 * !m_blacks_move + 2] = { !m_blacks_move, KING, 1, false };
-        m_board[7 * !m_blacks_move + 3] = { !m_blacks_move, ROOK, 1, false };
+        m_board[7 * !m_blacks_move + 2] = { !m_blacks_move, KING, 1 };
+        m_board[7 * !m_blacks_move + 3] = { !m_blacks_move, ROOK, 1 };
 
-        m_board[7 * !m_blacks_move] = { false, NONE, 0, false };
-        m_board[7 * !m_blacks_move + 4] = { false, NONE, 0, false };
+        m_board[7 * !m_blacks_move] = { false, NONE, 0 };
+        m_board[7 * !m_blacks_move + 4] = { false, NONE, 0 };
       }
       else {
-        m_board[7 * !m_blacks_move + 6] = { !m_blacks_move, KING, 1, false };
-        m_board[7 * !m_blacks_move + 5] = { !m_blacks_move, ROOK, 1, false };
+        m_board[7 * !m_blacks_move + 6] = { !m_blacks_move, KING, 1 };
+        m_board[7 * !m_blacks_move + 5] = { !m_blacks_move, ROOK, 1 };
 
-        m_board[7 * !m_blacks_move + 4] = { false, NONE, 0, false };
-        m_board[7 * !m_blacks_move + 7] = { false, NONE, 0, false };
+        m_board[7 * !m_blacks_move + 4] = { false, NONE, 0 };
+        m_board[7 * !m_blacks_move + 7] = { false, NONE, 0 };
       }
     }
   }

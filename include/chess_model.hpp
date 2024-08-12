@@ -37,7 +37,6 @@ private:
     bool        isBlack           = false;
     FigureType  type              = NONE;
     size_t      moves_count       = 0;
-    bool        passant_available = false;
   };
 
 
