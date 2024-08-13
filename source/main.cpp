@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 
-int ShowMessage(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons)
+int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons)
 {
 
   sf::RectangleShape bg;
@@ -177,13 +177,13 @@ int main()
     switch (game_res)
     {
     case 1:
-      exit = ShowMessage(wnd, "White wins!", { "Play again", "Exit" });
+      exit = AskUser(wnd, "White wins!", { "Play again", "Exit" });
       break;
     case 2:
-      exit = ShowMessage(wnd, "Black wins!", { "Play again", "Exit" });
+      exit = AskUser(wnd, "Black wins!", { "Play again", "Exit" });
       break;
     case 3:
-      exit = ShowMessage(wnd, "Draw!", { "Play again", "Exit" });
+      exit = AskUser(wnd, "Draw!", { "Play again", "Exit" });
       break;
     default:
       break;

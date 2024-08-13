@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-int ShowMessage(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons);
+int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons);
 
 
 ChessModel::ChessModel() : m_blacks_move(false), m_board(nullptr)
@@ -256,7 +256,7 @@ void ChessModel::Move(const std::string &from, const std::string &to, sf::Render
   for (int x = 0; x < 8; ++x)
     if (m_board[m_blacks_move * 7 * 8 + x].type == PAWN) {
       for (int i = 0; i < 1; ++i) {
-        switch (ShowMessage(wnd, "Choose new figure", { "Queen", "Rook", "Bishop", "Knight" }))
+        switch (AskUser(wnd, "Choose new figure", { "Queen", "Rook", "Bishop", "Knight" }))
         {
         case 3:
           m_board[m_blacks_move * 7 * 8 + x].type = KNIGHT;
