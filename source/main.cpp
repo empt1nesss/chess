@@ -8,7 +8,12 @@
 #include <SFML/Graphics.hpp>
 
 
-int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons)
+int AskUser(
+  sf::RenderWindow &wnd,
+  const std::string &assets_path,
+  const std::string &msg, 
+  const std::vector<std::string> &buttons
+)
 {
 
   sf::RectangleShape bg;
@@ -17,7 +22,7 @@ int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std
   bg.setOutlineThickness(2.f);
 
   sf::Font font;
-  font.loadFromFile("assets/FiraCode-Medium.ttf");
+  font.loadFromFile(assets_path + "FiraCode-Medium.ttf");
 
   sf::Text msg_text;
   msg_text.setFont(font);
@@ -116,15 +121,27 @@ int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std
   return res - 1;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-  ChessModel cm;
+  std::string assets_path (
+    argv[0],
+    argv[0] + std::string(argv[0]).find_last_of(
+#ifdef _WIN32
+      "\\"
+#elif defined (__unix__)
+      "/"
+#endif
+    )
+  );
+  assets_path += "/assets/";
+
+  ChessModel cm(assets_path);
 
   std::string move_from_bf, move_to_bf;
   int game_res = 0;
   
   sf::Texture t_bg;
-  t_bg.loadFromFile("assets/bg.png");
+  t_bg.loadFromFile(assets_path + "bg.png");
   sf::Sprite bg(t_bg);
 
   sf::RenderWindow wnd{
@@ -177,13 +194,13 @@ int main()
     switch (game_res)
     {
     case 1:
-      exit = AskUser(wnd, "White wins!", { "Play again", "Exit" });
+      exit = AskUser(wnd, assets_path, "White wins!", { "Play again", "Exit" });
       break;
     case 2:
-      exit = AskUser(wnd, "Black wins!", { "Play again", "Exit" });
+      exit = AskUser(wnd, assets_path, "Black wins!", { "Play again", "Exit" });
       break;
     case 3:
-      exit = AskUser(wnd, "Draw!", { "Play again", "Exit" });
+      exit = AskUser(wnd, assets_path, "Draw!", { "Play again", "Exit" });
       break;
     default:
       break;

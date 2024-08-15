@@ -1,1 +1,1 @@
-Run it from workspace directory!
+Run it from build/bin

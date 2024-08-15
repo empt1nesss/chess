@@ -6,6 +6,7 @@ IF (WIN32)
 ENDIF()
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 IF (WIN32)
   include(FetchContent)
@@ -50,4 +51,11 @@ IF(WIN32)
   )
   install(TARGETS ${PROJECT_NAME})
 ENDIF()
+
+file(REMOVE_RECURSE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets)
+add_custom_command(
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+  ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
 

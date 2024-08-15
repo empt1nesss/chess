@@ -10,7 +10,7 @@ class ChessModel
 {
 public:
   
-  ChessModel();
+  ChessModel(const std::string &assets_path);
   ~ChessModel();
 
   void  Print       ();
@@ -46,6 +46,7 @@ private:
   std::string m_last_move;
 
   std::map<std::string, sf::Texture> m_textures;
+  std::string                        m_assets_path;
 
 
   bool checkMove(int x_from, int y_from, int x_to, int y_to, bool check_if_shah=true);

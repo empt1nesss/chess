@@ -2,23 +2,29 @@
 
 #include <iostream>
 
-int AskUser(sf::RenderWindow &wnd, const std::string &msg, const std::vector<std::string> &buttons);
+int AskUser(
+  sf::RenderWindow &wnd,
+  const std::string &assets_path,
+  const std::string &msg, 
+  const std::vector<std::string> &buttons
+);
 
-
-ChessModel::ChessModel() : m_blacks_move(false), m_board(nullptr)
+ChessModel::ChessModel(const std::string &assets_path) : m_blacks_move(false), m_board(nullptr)
 {
   Reset();
 
+  m_assets_path = assets_path;
+
   for (char ft : "pkbrqc") {
-    m_textures[std::string(1, ft) + "w"].loadFromFile("assets/" + std::string(1, ft) + "w.png");
-    m_textures[std::string(1, ft) + "b"].loadFromFile("assets/" + std::string(1, ft) + "b.png");
+    m_textures[std::string(1, ft) + "w"].loadFromFile(m_assets_path + std::string(1, ft) + "w.png");
+    m_textures[std::string(1, ft) + "b"].loadFromFile(m_assets_path + std::string(1, ft) + "b.png");
 
     if (ft == 'c')
       break;
   }
 
-  m_textures["movec"].loadFromFile("assets/move_cell.png");
-  m_textures["selc"].loadFromFile("assets/selected_cell.png");
+  m_textures["movec"].loadFromFile(m_assets_path + "move_cell.png");
+  m_textures["selc"].loadFromFile(m_assets_path + "selected_cell.png");
 }
 
 ChessModel::~ChessModel()
@@ -256,7 +262,7 @@ void ChessModel::Move(const std::string &from, const std::string &to, sf::Render
   for (int x = 0; x < 8; ++x)
     if (m_board[m_blacks_move * 7 * 8 + x].type == PAWN) {
       for (int i = 0; i < 1; ++i) {
-        switch (AskUser(wnd, "Choose new figure", { "Queen", "Rook", "Bishop", "Knight" }))
+        switch (AskUser(wnd, m_assets_path, "Choose new figure", { "Queen", "Rook", "Bishop", "Knight" }))
         {
         case 3:
           m_board[m_blacks_move * 7 * 8 + x].type = KNIGHT;
