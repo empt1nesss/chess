@@ -31,7 +31,12 @@ file(GLOB_RECURSE BUILD_TARGETS
   source/*.c
 )
 
-add_executable(${PROJECT_NAME} ${BUILD_TARGETS})
+IF(WIN32)
+  add_executable(${PROJECT_NAME} WIN32 ${BUILD_TARGETS})
+ELSE()
+  add_executable(${PROJECT_NAME} ${BUILD_TARGETS})
+ENDIF()
+
 
 include_directories(
   include

@@ -121,6 +121,7 @@ int AskUser(
   return res - 1;
 }
 
+
 int main(int argc, char **argv)
 {
   std::string assets_path (
@@ -133,7 +134,11 @@ int main(int argc, char **argv)
 #endif
     )
   );
+#ifdef _WIN32
+  assets_path += "\\assets\\";
+#elif defined (__unix__)
   assets_path += "/assets/";
+#endif
 
   ChessModel cm(assets_path);
 
@@ -223,3 +228,16 @@ int main(int argc, char **argv)
   return 0;
 }
 
+#ifdef _WIN32
+#include <windows.h>
+int WINAPI WinMain(
+  HINSTANCE hInstance,
+  HINSTANCE hPrevInstance,
+  LPSTR     lpCmdLine,
+  int       nShowCmd
+)
+{
+  char *program_name = ".\\chess.exe";
+  main(1, &program_name);
+}
+#endif
