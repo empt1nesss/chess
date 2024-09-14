@@ -407,6 +407,32 @@ bool ChessModel::checkMove(int x_from, int y_from, int x_to, int y_to, bool chec
       res = true;
       exception = "cs";
     }
+    
+    int king_x, king_y;
+    for (int fi = 0; fi < 64; ++fi)
+      if (m_board[fi].type == KING && m_board[fi].isBlack == m_blacks_move) {
+        king_x = fi % 8;
+        king_y = fi / 8;
+        break;
+      }
+    
+    m_blacks_move = !m_blacks_move;
+    for (int fi = 0; fi < 64; ++fi)
+      if (m_board[fi].type != NONE && m_board[fi].isBlack == m_blacks_move) {
+        try {
+          if (checkMove(fi % 8, fi / 8, king_x, king_y, false)) {
+            m_blacks_move = !m_blacks_move;
+            return false;
+          }
+        }
+        catch (...) {
+          m_blacks_move = !m_blacks_move;
+          return false;
+        }
+      }
+
+    
+    m_blacks_move = !m_blacks_move;
     goto CHECK_SHAH;
   }
 
@@ -701,9 +727,12 @@ CHECK_SHAH:
   m_last_move = temp_last_move;
   m_blacks_move = temp_blacks_move;
 
+  if (!res)
+    return false;
+
   if (!exception.empty())
     throw exception;
 
-  return res;
+  return true;
 }
 
